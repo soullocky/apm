@@ -24,7 +24,13 @@
         "xstring": "cpp",
         "xutility": "cpp",
         "iosfwd": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "*.tcc": "cpp",
+        "system_error": "cpp",
+        "array": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
     },
     // 切换到当前工作目录
     "terminal.integrated.env.windows": {

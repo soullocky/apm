@@ -37,6 +37,12 @@ protected:
     // calculate motor outputs
     void output_armed_stabilizing() override;
 
+    int16_t output_to_tilt1(float actuator);
+    int16_t output_to_tilt2(float actuator);
+    int16_t output_to_tilt3(float actuator);
+    int16_t output_to_tilt4(float actuator);
+    int16_t output_to_tilt5(float actuator);
+
     const char* _get_frame_string() const override { return "TAILSITTER"; }
 
     // spin a motor at the pwm value specified
@@ -48,6 +54,11 @@ protected:
     float _tilt_right;  // -1..1
     float _thrust_left;  // 0..1
     float _thrust_right;  // 0..1
+
+    float _tilt[5]; //舵机角度 -1..1
+    float _thrust[4]; //电机转速平方
+
+    float _virutal_thrust[12];
 
     // Set by tailsitters using diskloading minumum outflow velocity limit
     float _external_min_throttle;
