@@ -48,6 +48,9 @@ protected:
     float _tilt_right;  // -1..1
     float _thrust_left;  // 0..1
     float _thrust_right;  // 0..1
+    float _thrust[4];
+    float _tilt_pitch;
+    float _tilt_yaw;
 
     // Set by tailsitters using diskloading minumum outflow velocity limit
     float _external_min_throttle;

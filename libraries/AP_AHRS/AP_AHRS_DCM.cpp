@@ -27,6 +27,7 @@
 #include <AP_Baro/AP_Baro.h>
 #include <AP_Compass/AP_Compass.h>
 #include <AP_Logger/AP_Logger.h>
+#include <RC_Channel/RC_Channel.h>
 
 extern const AP_HAL::HAL& hal;
 
@@ -100,8 +101,19 @@ AP_AHRS_DCM::update()
     // for high level navigation control. Apply trim such that a
     // positive trim value results in a positive vehicle rotation
     // about that axis (ie a negative offset)
+    // 此处提供了一种俯仰旋转的语法，经测试验证，方法可行且稳定，可用于姿态控制
+    Matrix3f board_rotation;                                    // 新加语句
+    float board_rotate_pitch = RC_Channels::get_radio_in(CH_6);       // 新加语句，俯仰获取遥控器第6通道信号
+    float board_rotate_yaw = RC_Channels::get_radio_in(CH_5);       // 新加语句，偏航获取遥控器第5通道信号
+    board_rotate_pitch = (board_rotate_pitch -1500) *0.07f;                   // 新加语句，转换为最大倾斜角度
+    board_rotate_yaw = (board_rotate_yaw -1500) *0.2f;                   // 新加语句，转换为最大倾斜角度
+    board_rotation.from_euler(radians(0), radians(board_rotate_pitch), radians(board_rotate_yaw)); // 新加语句
+    
     _body_dcm_matrix = _dcm_matrix * AP::ahrs().get_rotation_vehicle_body_to_autopilot_body();
+    _body_dcm_matrix = board_rotation * _body_dcm_matrix;       //自定义旋转
     _body_dcm_matrix.to_euler(&roll, &pitch, &yaw);
+
+    
 
     // pre-calculate some trig for CPU purposes:
     _cos_yaw = cosf(yaw);
