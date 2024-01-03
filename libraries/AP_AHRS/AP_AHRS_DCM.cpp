@@ -110,10 +110,10 @@ AP_AHRS_DCM::update()
     board_rotation.from_euler(radians(0), radians(board_rotate_pitch), radians(board_rotate_yaw)); // 新加语句
     
     _body_dcm_matrix = _dcm_matrix * AP::ahrs().get_rotation_vehicle_body_to_autopilot_body();
-    _body_dcm_matrix = board_rotation * _body_dcm_matrix;       //自定义旋转
+    _body_dcm_matrix = _body_dcm_matrix * board_rotation;       //自定义旋转
     _body_dcm_matrix.to_euler(&roll, &pitch, &yaw);
 
-    
+    //gcs().send_text(MAV_SEVERITY_INFO,"%0.2f", pitch);
 
     // pre-calculate some trig for CPU purposes:
     _cos_yaw = cosf(yaw);

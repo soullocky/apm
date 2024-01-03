@@ -65,7 +65,7 @@ void AP_AHRS_View::update()
     float board_rotate_yaw = RC_Channels::get_radio_in(CH_5);       // 新加语句，偏航获取遥控器第5通道信号
     board_rotate_pitch = (board_rotate_pitch -1500) *0.07f;                   // 新加语句，转换为最大倾斜角度30
     board_rotate_yaw = (board_rotate_yaw -1500) *0.2f;                   // 新加语句，转换为最大倾斜角度
-    board_rotation.from_euler(radians(0), radians(board_rotate_pitch), radians(board_rotate_yaw)); // 新加语句
+    board_rotation.from_euler(radians(0), radians(-board_rotate_pitch), radians(-board_rotate_yaw)); // 新加语句
     
     rot_body_to_ned = ahrs.get_rotation_body_to_ned();
     gyro = ahrs.get_gyro();
@@ -77,6 +77,8 @@ void AP_AHRS_View::update()
 
     gyro = board_rotation * gyro;                               // 新加语句，陀螺仪数据进行自定义俯仰角度旋转
     
+    //gcs().send_text(MAV_SEVERITY_INFO,"%0.2f", gyro[1]);
+
     rot_body_to_ned.to_euler(&roll, &pitch, &yaw);
 
     roll_sensor  = degrees(roll) * 100;
