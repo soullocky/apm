@@ -103,6 +103,8 @@ public:
         k_tiltMotorRear         = 45,            ///<vectored thrust, rear tilt
         k_tiltMotorRearLeft     = 46,            ///<vectored thrust, rear left tilt
         k_tiltMotorRearRight    = 47,            ///<vectored thrust, rear right tilt
+        k_tiltpitch             = 48,            ///俯仰舵机
+        k_tiltyaw               = 49,            ///偏航舵机
         k_rcin1                 = 51,            ///< these are for pass-thru from arbitrary rc inputs
         k_rcin2                 = 52,
         k_rcin3                 = 53,
